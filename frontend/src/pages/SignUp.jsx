@@ -1,5 +1,6 @@
 import { useState } from "react";
 import GoHomeButton from "@components/GoHomeButton";
+import axios from "axios";
 
 export default function SignUp() {
   const [formState, setFormState] = useState({
@@ -12,14 +13,22 @@ export default function SignUp() {
   });
 
   const handleSignUp = () => {
-    // Requete création d'un utilisateur
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users`, {
+      ...formState,
+    });
   };
 
+  // Requete création d'un utilisateur
   return (
     <>
       <GoHomeButton />
       <h2>Formulaire d'inscription</h2>
-      <form onSubmit={() => handleSignUp()}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSignUp();
+        }}
+      >
         <input
           type="text"
           value={formState.email}
